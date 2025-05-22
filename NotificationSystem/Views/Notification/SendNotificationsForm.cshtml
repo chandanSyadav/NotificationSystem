@@ -1,0 +1,49 @@
+﻿@{
+    ViewData["Title"] = "Send Notification";
+}
+
+<h2>📢 Send Notification</h2>
+
+<form asp-action="SendNotification" method="post" class="mt-4">
+    <div class="mb-3">
+        <label class="form-label">Message</label>
+        <textarea name="message" class="form-control" required></textarea>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Send To</label>
+        <select name="target" class="form-select" required>
+            <option value="all">All Users</option>
+            <option value="user">Specific User</option>
+            <option value="role">Specific Role</option>
+        </select>
+    </div>
+
+    <div class="mb-3" id="extraInput" style="display:none;">
+        <label class="form-label" id="extraLabel"></label>
+        <input type="text" name="targetValue" class="form-control" />
+    </div>
+
+    <button type="submit" class="btn btn-success">Send Notification</button>
+</form>
+
+@section Scripts {
+    <script>
+        const targetSelect = document.querySelector("select[name='target']");
+        const extraInput = document.getElementById("extraInput");
+        const extraLabel = document.getElementById("extraLabel");
+
+        targetSelect.addEventListener("change", () => {
+            const value = targetSelect.value;
+            if (value === "user") {
+                extraLabel.textContent = "User ID (GUID or username)";
+                extraInput.style.display = "block";
+            } else if (value === "role") {
+                extraLabel.textContent = "Role Name (e.g., Admin)";
+                extraInput.style.display = "block";
+            } else {
+                extraInput.style.display = "none";
+            }
+        });
+    </script>
+}
