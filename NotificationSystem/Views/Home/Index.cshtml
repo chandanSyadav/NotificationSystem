@@ -3,32 +3,18 @@
 }
 
 <h2>🔔 Real-Time Notifications</h2>
-
+<h4>Notifications will be displayed here</h4>
 <div class="alert alert-info" id="notificationArea" style="display:none;"></div>
+<p>Logged in as: @User.FindFirst(System.Security.Claims.ClaimTypes.Email)?.Value</p>
 
-@section Scripts {
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/7.0.5/signalr.min.js"></script>
-    <script>
-        const connection = new signalR.HubConnectionBuilder()
-            .withUrl("/notificationHub")
-            .configureLogging(signalR.LogLevel.Information)
-            .build();
-
-        connection.on("ReceiveNotification", function (message) {
-            const alertBox = document.getElementById("notificationArea");
-            alertBox.innerText = message;
-            alertBox.style.display = "block";
-
-            // Auto-hide after 5 seconds
-            setTimeout(() => {
-                alertBox.style.display = "none";
-            }, 5000);
-        });
-
-        connection.start().then(function () {
-            console.log("SignalR connected.");
-        }).catch(function (err) {
-            return console.error(err.toString());
-        });
-    </script>
-}
+<div>
+    <h5>GuideLines</h5>
+    <ul>
+        <li style="font-weight: bold">adminId : admin@company.com , password: Admin@123</li>
+        <li>This is cookie based authentication app so if you want to login with two different users in same chrome please use one regular tab and other in incognito tab</li>
+        <li>There are pages you can see into the navigation tab to demostrate signalR funtionalities</li>
+        <li>To see signalR functionality without deploying the app you can use two different tabs with different users or same user.</li>
+        <li>'Send Notification' page sends notification directly without saving anything into database</li>
+        <li>'Place Order' page demostrates the db trigger, the entry will be saved into the database and at the same time it will send notification to the user which will be displayed here on this page (Home page)</li>
+    </ul>
+</div>

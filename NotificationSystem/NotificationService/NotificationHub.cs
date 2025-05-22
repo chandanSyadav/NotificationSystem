@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.SignalR;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.SignalR;
 using System.Security.Claims;
 
 namespace NotificationSystem.NotificationService
@@ -7,6 +8,7 @@ namespace NotificationSystem.NotificationService
     {
         private static readonly Dictionary<string, string> ConnectedUsers = new();
 
+        [Authorize]
         public override async Task OnConnectedAsync()
         {
             var userId = Context.UserIdentifier; // Based on NameIdentifier claim
@@ -22,6 +24,8 @@ namespace NotificationSystem.NotificationService
                 }
             }
 
+            UserConnectionManager.AddConnection(userId, Context.ConnectionId);
+
             await base.OnConnectedAsync();
         }
 
@@ -32,6 +36,8 @@ namespace NotificationSystem.NotificationService
             {
                 ConnectedUsers.Remove(userId);
             }
+
+            UserConnectionManager.RemoveConnection(userId, Context.ConnectionId);
 
             return base.OnDisconnectedAsync(exception);
         }

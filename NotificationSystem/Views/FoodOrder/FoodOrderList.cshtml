@@ -1,0 +1,44 @@
+﻿@using NotificationSystem.ViewModels
+@model IEnumerable<FoodOrderListViewModel>
+
+@{
+    ViewData["Title"] = "Food Orders";
+}
+
+<h2>Food Orders</h2>
+
+<table id="foodOrdersTable" class="display" style="width:100%">
+    <thead>
+        <tr>
+            <th>Order ID</th>
+            <th>Item</th>
+            <th>Quantity</th>
+            @* <th>UserId</th> *@
+            <th>UserEmail</th>
+            <th>Ordered At</th>
+            <th>Status</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var order in Model)
+        {
+                <tr>
+                    <td>@order.FoodDetails.Id</td>
+                <td>@order.FoodDetails.ItemName</td>
+                <td>@order.FoodDetails.Quantity</td>
+                @* <td>@order.FoodDetails.UserId</td> *@
+                <td>@order.UserName</td>
+                <td>@order.FoodDetails.OrderedAt.ToString("g")</td>
+                <td>@order.FoodDetails.Status</td>
+                </tr>
+        }
+    </tbody>
+</table>
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            $('#foodOrdersTable').DataTable();
+        });
+    </script>
+}

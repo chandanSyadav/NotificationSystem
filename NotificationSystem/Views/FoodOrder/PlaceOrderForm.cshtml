@@ -1,0 +1,59 @@
+﻿@model FoodOrder
+@{
+    ViewData["Title"] = "Place a Food Order";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<div class="row">
+    <div class="col-md-6">
+        <form asp-action="PlaceOrder" method="post">
+            <div class="form-group mb-3">
+                <label asp-for="ItemName" class="form-label">Food Item</label>
+                <input asp-for="ItemName" class="form-control" placeholder="e.g., Veg Sandwich" />
+                <span asp-validation-for="ItemName" class="text-danger"></span>
+            </div>
+
+            <div class="form-group mb-3">
+                <label asp-for="Quantity" class="form-label">Quantity</label>
+                <input asp-for="Quantity" type="number" min="1" class="form-control" />
+                <span asp-validation-for="Quantity" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Send To</label>
+                <select name="Target" class="form-select" required>
+                    <option value="all">All Users</option>
+                    <option value="user">Specific User</option>
+                    <option value="role">Specific Role</option>
+                </select>
+            </div>
+            <div class="mb-3" id="extraInput" style="display:none;">
+                <label class="form-label" id="extraLabel"></label>
+                <input type="text" name="targetValue" class="form-control" />
+            </div>
+            <button type="submit" class="btn btn-primary">Place Order</button>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    <script>
+        const targetSelect = document.querySelector("select[name='Target']");
+        const extraInput = document.getElementById("extraInput");
+        const extraLabel = document.getElementById("extraLabel");
+
+        targetSelect.addEventListener("change", () => {
+            const value = targetSelect.value;
+            if (value === "user") {
+                extraLabel.textContent = "User ID (username(email))";
+                extraInput.style.display = "block";
+            } else if (value === "role") {
+                extraLabel.textContent = "Role Name (e.g., Admin)";
+                extraInput.style.display = "block";
+            } else {
+                extraInput.style.display = "none";
+            }
+        });
+    </script>
+}

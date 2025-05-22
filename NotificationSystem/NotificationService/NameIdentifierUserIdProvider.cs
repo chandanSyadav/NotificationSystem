@@ -7,7 +7,7 @@ namespace NotificationSystem.NotificationService
     {
         public string GetUserId(HubConnectionContext connection)
         {
-            return connection.User?.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            return connection.User?.FindFirst(ClaimTypes.Email)?.Value;
         }
     }
 }

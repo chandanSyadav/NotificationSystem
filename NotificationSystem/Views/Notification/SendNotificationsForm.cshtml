@@ -36,7 +36,7 @@
         targetSelect.addEventListener("change", () => {
             const value = targetSelect.value;
             if (value === "user") {
-                extraLabel.textContent = "User ID (GUID or username)";
+                extraLabel.textContent = "User ID (username(email))";
                 extraInput.style.display = "block";
             } else if (value === "role") {
                 extraLabel.textContent = "Role Name (e.g., Admin)";

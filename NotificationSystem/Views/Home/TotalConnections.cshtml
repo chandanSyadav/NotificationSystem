@@ -1,0 +1,46 @@
+﻿@model List<string>
+
+<div id="connectionList">
+
+    <button class="btn btn-primary" onclick="getConnectionCount()">Refresh</button>
+    <h2>Total Connections <span id="connCount">@Model.Count</span></h2>
+
+    <table id="connectionListTable" class="display" style="width:100%">
+        <thead>
+            <tr>
+                <th>Connected User email</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+<script>
+
+</script>
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            $('#connectionListTable').DataTable();
+        });
+
+        function getConnectionCount(){
+
+            $.ajax({
+                url:'/Home/GetConnectionCount',
+                type: 'GET',
+                success:function(res){
+                    debugger
+                    $('#connectionList').replaceWith(res);
+                }
+            })
+        }
+    </script>
+}
