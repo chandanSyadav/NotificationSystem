@@ -39,6 +39,8 @@
                 success:function(res){
                     debugger
                     $('#connectionList').replaceWith(res);
+                    $('#connectionListTable').DataTable();
+
                 }
             })
         }
